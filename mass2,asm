@@ -1,0 +1,32 @@
+;include io.asm
+.model small
+.stack 100
+.data
+  mass db 100 dup(?)
+.code
+.startup
+start:
+      mov si,0 ;начальное значение массива
+      mov ax,6
+      mov cx,ax
+
+z1:
+      ;mov mass[si],'%'  ;запись в массив %
+      ;inc si
+
+      mov ah,01h ;ввод символа
+      int 21h
+
+      mov mass[si],'%'  ;запись в массив %
+      inc si
+      mov mass[si],al  ;запись в массив символа с клавиатуры
+      inc si
+
+      loop z1  ;цикл
+      mov mass[si], '$'  ;запись в массив конца массива
+
+      lea dx, mass
+      mov ah,09h  ;вывод символа
+      int 21h
+      .exit 0
+end
